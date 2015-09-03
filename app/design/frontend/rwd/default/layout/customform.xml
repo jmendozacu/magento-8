@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+    <customform_index_index>
+        <reference name="head">
+            <action method="setTitle" translate="title" module="customform"><title>Contact Us</title></action>
+        </reference>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-left.phtml</template>
+            </action>
+            <action method="setHeaderTitle" translate="title" module="customform"><title>Contact Us</title></action>
+        </reference>
+        <update handle="cms_menu"/>
+        <reference name="content">
+            <block type="customform/newform" name="block_newform" template="customform/newform.phtml" />
+        </reference>
+    </customform_index_index>
+    <customform_index_second>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-right.phtml</template>
+            </action>
+        </reference>
+        <remove name="right" />
+        <reference name="content">
+            <block type="customform/newproducts" name="block_newproducts" template="customform/newproducts.phtml" />
+        </reference>
+    </customform_index_second>
+</layout>

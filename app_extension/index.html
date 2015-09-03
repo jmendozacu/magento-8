@@ -1,0 +1,122 @@
+<!doctype html>
+<html data-ng-app="app">
+
+<head>
+    <meta charset="utf-8">
+    <title>App Extension</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <!--BootStrap-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.min.js"></script>
+    <!--Controller-->
+    <script type="text/javascript" src="Controller/app.js"></script>
+    <script type="text/javascript" src="Controller/IndexController.js"></script>
+    <script type="text/javascript" src="Controller/ModalInstanceCtrl.js"></script>
+    <!--AngularJS Packages-->
+    <script type="text/javascript" src="bower_components/angular-base64-upload/dist/angular-base64-upload.js"></script>
+    <script type="text/javascript" src="bower_components/json-formatter/dist/json-formatter.min.js"></script>
+    <!--Factory-->
+    <script type="text/javascript" src="Factory/Utils.js"></script>
+    <!--Service-->
+    <script type="text/javascript" src="Service/restService.js"></script>
+    <!--Style-->
+    <!--<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/json-formatter/dist/json-formatter.min.css" />
+    <link type="text/css" rel="stylesheet" href="css/default.css" />
+</head>
+
+<body data-ng-controller="indexController">
+
+<div data-ng-show="alert">
+    <alert type="{{alert.type}}" close="closeAlert()">{{alert.msg}}</alert>
+</div>
+
+<div data-ng-click="toggleDebugMode()">
+    <pre>
+        {{errorObj}}
+    </pre>
+</div>
+
+<table class="navMenu">
+    <tr>
+        <td>
+            <input type="button" value="HOME" data-ng-click="backHome()" />
+        </td>
+        <td data-ng-if="authenticated">
+            <input type="button" value="Get Product List" data-ng-click="getProductList()" />
+        </td>
+        <td>
+            <input type="number" style="width: 35px;" data-ng-model="bigCurrentPage" />
+            <!--<input type="number" style="width: 50px;" data-ng-model="rowsPerPage" />-->
+            <select style="width: 60px;" data-ng-model="rowsPerPage">
+                <option>1</option>
+                <option>10</option>
+                <option>20</option>
+                <option>50</option>
+                <option>100</option>
+            </select>
+        </td>
+        <td data-ng-if="authenticated">
+            <input type="button" value="Create New Product" data-ng-click="createNewProduct()" />
+        </td>
+        <td>
+            <input type="button" value="CLEAR SESSION" data-ng-click="destroySession()" />
+        </td>
+    </tr>
+</table>
+
+<div ng-switch on="authObject.action">
+    <div ng-switch-when="getProductList">
+        <div class="alignCenter">
+            <span data-ng-repeat="entity in productList">
+                <span data-ng-bind="entity.sku" data-ng-if="isNotEmpty(entity.sku)"></span>
+                <span data-ng-if="$index<productList.length-1&&isNotEmpty(entity.sku)">, </span>
+            </span>
+        </div>
+
+        <table class="infoTable marginAuto" data-ng-if="productList.length>0">
+            <tr>
+                <th>#</th>
+                <th>SKU#</th>
+                <th>RAW data</th>
+                <th>Image</th>
+                <th></th>
+            </tr>
+            <tr data-ng-repeat="entity in productList">
+                <td class="alignCenter" data-ng-bind="$index+1"></td>
+                <td class="alignCenter">
+                    <span data-ng-bind="entity.sku"></span>
+                </td>
+                <td>
+                    <json-formatter open="1" json="entity"></json-formatter>
+                    <!--<pre><span data-ng-bind="entity | json"></span></pre>-->
+                </td>
+                <td>
+                    <span data-ng-repeat="image in entity.images"><img ng-src="{{image.url}}" style="max-width: 100px;max-height: 100px;"></span>
+                </td>
+                <td>
+                    <input type="button" value="upload Image" data-ng-click="chooseTargetProductToUploadImage(entity)" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div ng-switch-when="createNewProduct">
+        createNewProduct
+    </div>
+</div>
+
+<!--Pagination-->
+<!--<div style="text-align: center;" data-ng-if="productList.length>0">-->
+<!--<pagination total-items="totalAmount" ng-model="bigCurrentPage" max-size="rowsPerPage" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></pagination>-->
+<!--</div>-->
+
+<pre data-ng-if="pageSetup.debug">
+    attributeSetTable: {{attributeSetTable}}
+    uploadFile: {{uploadFile}}
+    rwItemNumberList: {{rwItemNumberList}}
+    authObject: {{authObject | json}}
+</pre>
+
+</body>
+</html>

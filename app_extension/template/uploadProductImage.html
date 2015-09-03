@@ -1,0 +1,26 @@
+
+<div class="modal-header">
+    <h3 class="modal-title">Upload {{uploadObj.itemObj.sku}} Image</h3>
+</div>
+
+<div class="modal-body">
+    <div style="text-align: center;">
+        <span data-ng-repeat="image in uploadObj.itemObj.images"><img ng-src="{{image.url}}" style="max-width: 100px;max-height: 100px;"></span>
+    </div>
+
+    <div class="alignCenter">
+        <div><span>entity_id</span><span data-ng-bind="uploadObj.itemObj.entity_id"></span></div>
+        <div><span>sku</span><span data-ng-bind="uploadObj.itemObj.sku"></span></div>
+        <form style="max-width: 900px;margin: 0 auto;" class="alignRight">
+            <input type="file" ng-model="uploadObj.uploadFile" id="file" name="file" base-sixty-four-input style="display: inline">
+            <button ng-click="uploadProductImage(uploadFile)">Upload</button>
+        </form>
+    </div>
+
+    {{uploadObj}}
+</div>
+
+<!--<div class="modal-footer">-->
+<!--<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>-->
+<!--<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>-->
+<!--</div>-->
