@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <menu>
+        <system>
+            <children>
+                <customform translate="title" module="customform">
+                    <title>Customform</title>
+                    <sort_order>10</sort_order>
+                    <action>adminhtml/customform_index</action>
+                </customform>
+            </children>
+        </system>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <tilte>Allow Everything</tilte>
+            </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <customform>
+                                <title>Customform index page</title>
+                                <sort_order>10</sort_order>
+                            </customform>
+                            <config>
+                                <children>
+                                    <customform translate="title" module="customform">
+                                        <title>Customform index page</title>
+                                    </customform>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>
